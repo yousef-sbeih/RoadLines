@@ -7,7 +7,7 @@
 
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+
 # constants that we need in processing
 RHO = 1
 THETA = np.pi/180
@@ -120,8 +120,6 @@ class RoadLines:
         maskedImage = RoadLines.getMask(grayImage, hsvImage)
         cannyEdges = RoadLines.getEdges(maskedImage)
         ROIImage = RoadLines.regionOfinterest(cannyEdges)
-        plt.imshow(ROIImage)
-        plt.show()
         lines = RoadLines.getFilterdLines(ROIImage)
         filterdLines = RoadLines.getClosestLines(lines)
         return filterdLines
