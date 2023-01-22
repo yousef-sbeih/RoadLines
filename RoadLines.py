@@ -1,7 +1,7 @@
 
 """
     this class is for road lines detection,
-    it have one main static method: getLines(image)
+    it have one main static method: getRoadLines(image)
     that takes image as input and returns left and right lines coordinates
 """
 
@@ -91,6 +91,26 @@ class RoadLines:
                         filterdLines.append(line)
         return filterdLines
     """
+    This method is to filterd lines to get only left and right lines
+    """
+    @staticmethod
+    def getClosestLines(lines):
+        halfWidth = 1920 / 2
+        minLine = float('inf')
+        maxLine = float('-inf')
+        for line in lines:
+            x1, y1, x2, y2 = line[0]
+            if x1 > halfWidth:
+                if x1 < minLine:
+                    minLine = x1
+                    rightLine = line
+            else:
+                if x1 > maxLine:
+                    maxLine = x1
+                    leftLine = line
+        return [leftLine, rightLine]
+
+    """
     This is the main method of the class that you can call it
     It takes image as input, apply all of method and return lines.
     """
@@ -103,4 +123,5 @@ class RoadLines:
         plt.imshow(ROIImage)
         plt.show()
         lines = RoadLines.getFilterdLines(ROIImage)
-        return lines
+        filterdLines = RoadLines.getClosestLines(lines)
+        return filterdLines
